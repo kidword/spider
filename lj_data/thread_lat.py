@@ -7,6 +7,7 @@ from fake_useragent import UserAgent
 import json
 import datetime
 import random
+import time
 
 Today = datetime.datetime.now()  # 获取当天时间
 Today1 = Today.strftime('%Y-%m-%d')
