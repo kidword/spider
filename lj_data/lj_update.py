@@ -34,7 +34,7 @@ def updata():
         cur = conn1.cursor()
         sql = "update lj_test_copy set c_price=(select (b.z_price-a.z_price) as plaquenum from" \
               "(select * from lj_test_copy where address='{0}' and dtime='{1}' and apartment='{2}' and area='{3}') a," \
-              "(select * from lj_test_copy where address='{4}' and dtime='{5}' and apartment='{6}' and area='{7}') b) where " \
+              "(select * from lj_test_copy where address='{4}' and dtime='{5}' and apartment='{6}' and area='{7}') b),b.lat=a.lat,b.lon=a.lon where " \
               "address='{8}' and dtime='{9}' and apartment='{10}' and area='{11}'".format \
             (address, yesterday1, apartment, area, address, Today1, apartment, area, address, Today1, apartment, area)
         cur.execute(sql)

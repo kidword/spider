@@ -58,28 +58,44 @@ class LianJia(Mysql):
         name_lis = []
         for lis in rows:
             name_lis.append(list(lis))
-        return name_lis
+        return name_lis,data1
+
+    def name(self):
+        conn = py.connect(host='localhost', user='root', password='hh226752', db='flightradar24', charset='utf8')
+
+        cur1 = conn.cursor()
+
+        sql = 'select address from lj_spider group by address'
+        cn1 = cur1.execute(sql)
+        list1 = cur1.fetchall()
+        data1 = [list(i) for i in list1]
+        print(data1)
+        return data1
 
     def make_url(self):
         urls = self.getmysql()
+        name = self.name()
         for name in urls:
             dict1 = dict()
             names = name[1] + name[2]
-            query = {
-                'key': 'f247cdb592eb43ebac6ccd27f796e2d2',
-                'address': names,
-                'output': 'json',
-            }
-            base = 'http://api.map.baidu.com/geocoder?'
-            url = base + parse.urlencode(query)
-            dict1['qu'] = name[1]
-            dict1['address'] = name[2]
-            dict1['apartment'] = name[3]
-            dict1['area'] = name[4]
-            dict1['d_price'] = name[5]
-            dict1['z_price'] = name[6]
-            dict1['url'] = url
-            self.url_q.put(dict1)
+            if name[2] not in name:
+                query = {
+                    'key': 'f247cdb592eb43ebac6ccd27f796e2d2',
+                    'address': names,
+                    'output': 'json',
+                }
+                base = 'http://api.map.baidu.com/geocoder?'
+                url = base + parse.urlencode(query)
+                dict1['qu'] = name[1]
+                dict1['address'] = name[2]
+                dict1['apartment'] = name[3]
+                dict1['area'] = name[4]
+                dict1['d_price'] = name[5]
+                dict1['z_price'] = name[6]
+                dict1['url'] = url
+                self.url_q.put(dict1)
+            else:
+                pass
 
     def send_request(self):
         while True:
