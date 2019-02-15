@@ -46,7 +46,13 @@ class LianJia(Mysql):
     def getmysql(self):
         conn = py.connect(host='localhost', user='root', password='hh226752', db='flightradar24', charset='utf8')
         cur = conn.cursor()
+        cur1 = conn.cursor()
         cn = cur.execute('select * from lj_spider where dtime="{}"'.format(Today1))
+        sql = 'select address from lj_spider group by address'
+        cn1 = cur1.execute(sql)
+        list1 = cur1.fetchall()
+        data1 = [list(i) for i in list1]
+        print(data1)
         rows = cur.fetchall()
         rows = list(rows)
         name_lis = []
@@ -151,5 +157,6 @@ class LianJia(Mysql):
 
 if __name__ == '__main__':
     spider = LianJia()
-    spider.run()
+    spider.getmysql()
+    # spider.run()
     spider.close_mysql()
