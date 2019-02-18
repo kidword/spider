@@ -58,7 +58,7 @@ class LianJia(Mysql):
         name_lis = []
         for lis in rows:
             name_lis.append(list(lis))
-        return name_lis,data1
+        return name_lis, data1
 
     def name(self):
         conn = py.connect(host='localhost', user='root', password='hh226752', db='flightradar24', charset='utf8')
@@ -102,6 +102,7 @@ class LianJia(Mysql):
             dict1 = self.url_q.get()
             url = dict1['url']
             headers = {"User-Agent": ua.random}
+            n = 1
             try:
                 timeout = random.randrange(30, 40)
                 resp = requests.get(url, headers=headers, timeout=timeout)
@@ -109,6 +110,9 @@ class LianJia(Mysql):
                     dict1['html'] = resp.content.decode('utf-8')
                     self.html_q.put(dict1)
                     self.url_q.task_done()
+                    n += 1
+                    if n == 6000 or n == 12000 or n == 18000 or n == 24000 or n == 30000 or n == 36000:
+                        time.sleep(60)
                 else:
                     break
             except Exception as e:
@@ -174,5 +178,5 @@ class LianJia(Mysql):
 if __name__ == '__main__':
     spider = LianJia()
     spider.getmysql()
-    # spider.run()
+    spider.run()
     spider.close_mysql()

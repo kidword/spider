@@ -17,8 +17,8 @@ def getmysql():
 
 conn = getmysql()
 cur = conn.cursor()
-# cn = cur.execute('select * from lj_spider where qu="朝阳区" and dtime="{}"'.format(now_time))
-cn = cur.execute('select * from lj_spider where qu="房山区"')
+# cn = cur.execute('select * from lj_spider where dtime="{}"'.format(now_time))
+cn = cur.execute('select * from lj_spider where qu="通州区" and dtime="{}"'.format(now_time))
 rows = cur.fetchall()
 rows = list(rows)
 
@@ -62,10 +62,9 @@ def run():
             error.append(names)
             print(e)
         n += 1
-        if n == 3000 or n == 10000 or n == 18000 or n == 24000 or n == 30000 or n == 36000 or n == 42000:
+        if n == 3000 or n == 10000:
             print('进入等待60秒...')
             time.sleep(60)
-
 
 if __name__ == '__main__':
     run()
