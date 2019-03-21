@@ -4,8 +4,8 @@ This is my test
 
   
 #### [1.模拟微博登录](https://github.com/kidword/spider/tree/master/weibo)  
-----
 - 使用`selenium`和`phantomjs`模拟浏览器输入用户名和密码进行微博登录的`demo`;
+  ----
 
 [2.ip代理抓取](https://github.com/kidword/spider/tree/master/IP_proxy)
 =====
